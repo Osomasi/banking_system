@@ -9,6 +9,7 @@ import Footer from './Footer'
 import PlaidLink from './PlaidLink'
 
 const Sidebar = ({ user }: SiderbarProps) => {
+
   const pathname = usePathname();
 
   return (
@@ -26,6 +27,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
         </Link>
 
         {sidebarLinks.map((item) => {
+          // active route conditions to have the bg-bank-gradient background
           const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`)
 
           return (
@@ -49,10 +51,10 @@ const Sidebar = ({ user }: SiderbarProps) => {
           )
         })}
         
-        <PlaidLink user={user} />
+        {/* <PlaidLink user={user} /> */}
       </nav>
 
-      <Footer user={user} />
+      {/* <Footer user={user} /> */}
     </section>
   )
 }
