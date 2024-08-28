@@ -91,7 +91,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
             />
             <h1 className="text-26 font-bold font-ibm-plex-serif text-black-1">My Banker</h1>
           </Link>
-          <div className="">
+          <div className="pt-20">
             <SheetClose asChild>
               <nav className="flex flex-col gap-6 text-white">
                 {sidebarLinks.map((item) => {
