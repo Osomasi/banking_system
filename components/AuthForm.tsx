@@ -183,23 +183,39 @@ const AuthForm = ({ type }: { type: string }) => {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   
+  const router = useRouter()
   const formSchema = authFormSchema(type)
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-    },
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsLoading(true)
-    console.log(values)
-    setIsLoading(false)
+    // console.log(values)
+    // setIsLoading(false)
+    try {
+      // sign up with appwrite & create a plaid link token for your bank account
+      if(type === 'sign-up'){
+        const newUser = await signUp(data);
+
+        setUser(newUser)
+      }
+      if(type === 'sign-in'){
+        const response = await signIn({ email: data.email, password: data.password})
+        if(response) router.push('/')
+      }
+
+    } catch (error) {
+      console.log(error);
+      
+    } finally{
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -238,10 +254,12 @@ const AuthForm = ({ type }: { type: string }) => {
                     <CustomInput control={form.control} name='lastName' label='Last Name' placeholder='Enter your Last Name' />
                   </div>
                   <CustomInput control={form.control} name='address1' label='Address' placeholder='Enter your Address' />
+                  <CustomInput control={form.control} name='city' label='City' placeholder='Enter your City' />
+
                   <div className='flex gap-4'>
+                    <CustomInput control={form.control} name='dateOfBirth' label='Date of Birth' placeholder='yyyy-mm-dd' />
                     <CustomInput control={form.control} name='postalCode' label='Postal Code' placeholder='ex: 1101' />
                   </div>
-                  <CustomInput control={form.control} name='dateOfBirth' label='Date of Birth' placeholder='yyyy-mm-dd' />
                   <div className='flex gap-4'>
                     <CustomInput control={form.control} name='state' label='State' placeholder='ex: ABJ' />
                     <CustomInput control={form.control} name='ssn' label='BVN' placeholder='ex: 1234' />

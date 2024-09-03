@@ -81,7 +81,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
     <section className="w-full max-w-[264px]">
       <Sheet>
         <SheetTrigger> <Image src={'/icons/hamburger.svg'} width={30} height={30} alt='menu' className="cursor-ponter" /></SheetTrigger>
-        <SheetContent side={"left"} className="border-none bg-white">
+        <SheetContent side={"left"} className="border-none bg-white flex flex-col justify-between">
           <Link href="/" className=" cursor-pointer flex items-center gap-2 px-4">
             <Image
               src="/icons/logo.svg"
@@ -91,7 +91,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
             />
             <h1 className="text-26 font-bold font-ibm-plex-serif text-black-1">My Banker</h1>
           </Link>
-          <div className="pt-20">
+          <div className="">
             <SheetClose asChild>
               <nav className="flex flex-col gap-6 text-white">
                 {sidebarLinks.map((item) => {
@@ -127,10 +127,10 @@ const MobileNav = ({ user }: MobileNavProps) => {
               </nav>
             </SheetClose>
           </div>
+          <Footer user={user} type='mobile' />
+
         </SheetContent>
-
       </Sheet>
-
     </section>
   )
 }
