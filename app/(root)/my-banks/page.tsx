@@ -7,8 +7,9 @@ const MyBanks = () => {
 
   return (
     <section className='bank-info_content'>    
+          my banks
       <header className='home-header'>
-        <HeaderBox type='greeting' title='Welcome' user={loggedIn?.firstName || 'Guest'} subtext='Access and manage your account and transactions efficiently' />
+        {/* <HeaderBox type='greeting' title='Welcome' user={loggedIn?.firstName || 'Guest'} subtext='Access and manage your account and transactions efficiently' /> */}
       </header>
     </section>
   )
