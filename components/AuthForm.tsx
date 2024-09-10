@@ -200,8 +200,23 @@ const AuthForm = ({ type }: { type: string }) => {
     // setIsLoading(false)
     try {
       // sign up with appwrite & create a plaid link token for your bank account
+
       if(type === 'sign-up'){
-        const newUser = await signUp(data);
+        // ensure typescript knows that optional fields (?) are still required
+        const userData = {
+          firstName: data.firstName!,
+          lastName: data.lastName!,
+          address1: data.address1!,
+          city: data.city!,
+          state: data.state!,
+          postalCode: data.postalCode!,
+          dateOfBirth: data.dateOfBirth!,
+          ssn: data.ssn!,
+          email: data.email, // no need for exclamation as is not an optional field in schema
+          password: data.password // no need for exclamation as is not an optional field in schema
+
+        }
+        const newUser = await signUp(userData);
 
         setUser(newUser)
       }
@@ -243,7 +258,9 @@ const AuthForm = ({ type }: { type: string }) => {
       {user ?
         (<div className='flex flex-col gap-4'>
           {/* Plaid Link */}
-        </div>) :
+          <PlaidLink user={user} variant="primary" />
+        </div>
+        ) :
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -291,7 +308,8 @@ const AuthForm = ({ type }: { type: string }) => {
               {type === 'sign-in' ? 'Sign Up' : 'Sign In'}
             </Link>
           </footer>
-        </>}
+        </>
+      }
     </section>
   )
 }
